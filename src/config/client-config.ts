@@ -1,4 +1,4 @@
-let config =  {
+const config =  {
   mandrillApiKey: 'YY5pkBrTRAXKodN-0CL38g',
 };
 
