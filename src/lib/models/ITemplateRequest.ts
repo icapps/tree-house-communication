@@ -1,8 +1,8 @@
 export interface ITemplateRequest {
   templateName: string;
   subject: string;
-  from: { email: string, name?: string };
-  to: ITo[];
+  from: { email: string, name?: string } | string;
+  to: (ITo | string)[];
   globalContent: { name: string, value: string }[];
 }
 
@@ -10,7 +10,7 @@ export interface ITo {
   email: string;
   name?: string;
   type?: string;
-  content? : {
+  content?: {
     name: string;
     value: string;
   }[];

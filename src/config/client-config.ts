@@ -1,5 +1,5 @@
 const config =  {
-  mandrillApiKey: 'secret key comes here',
+  mandrillApiKey: 'YY5pkBrTRAXKodN-0CL38g',
 };
 
 export function getMandrillApiKey() {

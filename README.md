@@ -2,20 +2,41 @@
 
 Boilerplate module written in typescript
 
-[![npm version](https://badge.fury.io/js/tree-house-boilerplate.svg)](https://badge.fury.io/js/tree-house-boilerplate)
-[![Dependencies](https://david-dm.org/icapps/tree-house-boilerplate.svg)](https://david-dm.org/icapps/tree-house-boilerplate.svg)
-[![Build Status](https://travis-ci.org/icapps/tree-house-boilerplate.svg?branch=master)](https://travis-ci.org/icapps/tree-house-boilerplate)
-[![Coverage Status](https://coveralls.io/repos/github/icapps/tree-house-boilerplate/badge.svg)](https://coveralls.io/github/icapps/tree-house-boilerplate) [![Greenkeeper badge](https://badges.greenkeeper.io/icapps/tree-house-communication.svg)](https://greenkeeper.io/)
+[![npm version](https://badge.fury.io/js/tree-house-communication.svg)](https://badge.fury.io/js/tree-house-communication)
+[![Dependencies](https://david-dm.org/icapps/tree-house-communication.svg)](https://david-dm.org/icapps/tree-house-communication.svg)
+[![Build Status](https://travis-ci.org/icapps/tree-house-communication.svg?branch=master)](https://travis-ci.org/icapps/tree-house-communication)
+[![Coverage Status](https://coveralls.io/repos/github/icapps/tree-house-communication/badge.svg)](https://coveralls.io/github/icapps/tree-house-communication)
 
-## Usage
+## General
+This module is used to send emails with Mandrill and only template requests (for now).
+
+## Installation
 
 ```shell
-Clone this project
+npm install tree-house-communication
+```
+## Usage example
+
+```javascript
+import * as emailService from 'tree-house-communication'
+
+// set Mandrill API key
+emailService.setMandrillApiKey('secretMandrillKey')
+
+// Create email(s)
+const mailInfo : ITemplateRequest = {
+        templateName: 'icapps-newsletter-template',
+        subject: 'My subject',
+        from: { email: 'info@icapps.be', name: 'Info icapps' },
+        to: [{ email: 'testAddress@gmail.com', name: 'Optional', content: [{ name: 'greeting', value: 'Hello test!' }] }],
+        globalContent: [{ name: 'news', value: 'content of big news' }],
+      };
+
+      // Send email(s)
+      await sendEmailWithTemplate(mailInfo);
 ```
 
-```shell
-Copy code to new git project, commit and start making your new module
-```
+
 
 ## Tests
 
@@ -24,7 +45,7 @@ Copy code to new git project, commit and start making your new module
 
 ## Authors
 
-See the list of [contributors](https://github.com/icapps/tree-house-boilerplate/contributors) who participated in this project.
+See the list of [contributors](https://github.com/icapps/tree-house-communication/contributors) who participated in this project.
 
 ## License
 

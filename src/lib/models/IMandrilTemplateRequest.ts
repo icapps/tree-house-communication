@@ -10,6 +10,18 @@ export interface IMandrilTemplateRequest {
     merge_vars: IMergeVars[];
 
     // optional properties
+    html?: string;
+    text?: string;
+    important?: Boolean;
+    track_opens?: Boolean;
+    track_clicks?: Boolean;
+    auto_text?: Boolean;
+    auto_html?: Boolean;
+    inline_css?: Boolean;
+    url_strip_qs?: Boolean;
+    preserve_recipients?: Boolean;
+    view_content_link?: Boolean;
+    bcc_address?: string;
 
   };
 
@@ -17,7 +29,8 @@ export interface IMandrilTemplateRequest {
   tags?: [];
   subaccount?: string;
   google_analytics_domains?: [];
-
+  async?: Boolean;
+  send_at?: string;
 }
 
 export interface IRecipient {
