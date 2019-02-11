@@ -28,13 +28,21 @@ const mailInfo : ITemplateRequest = {
         templateName: 'icapps-newsletter-template',
         subject: 'My subject',
         from: { email: 'info@icapps.be', name: 'Info icapps' },
-        to: [{ email: 'testAddress@gmail.com', name: 'Optional', content: [{ name: 'greeting', value: 'Hello test!' }] }],
+        to: [{ email: 'testAddress@gmail.com', name: 'Optional',
+         content: [{ name: 'greeting', value: 'Hello test!' }] }],
         globalContent: [{ name: 'news', value: 'content of big news' }],
       };
 
+      const extraMandrillOptions = {
+         async: true,
+         message: { bcc_address: 'test@gmail.com' } 
+         }
+
       // Send email(s)
-      await sendEmailWithTemplate(mailInfo);
+      await sendEmailWithTemplate(mailInfo, extraMandrillOptions);
 ```
+
+See all  [extraMandrillOptions](https://mandrillapp.com/api/docs/messages.JSON.html#method=send-template)
 
 
 

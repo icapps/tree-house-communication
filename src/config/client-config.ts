@@ -1,11 +1,11 @@
 const config =  {
-  mandrillApiKey: 'YY5pkBrTRAXKodN-0CL38g',
+  mandrillApiKey: '',
 };
 
-export function getMandrillApiKey() {
+export const getMandrillApiKey = () => {
   return config.mandrillApiKey;
-}
+};
 
-export function setMandrillApiKey(key: string) {
+export const setMandrillApiKey = (key: string)  => {
   config.mandrillApiKey = key;
-}
+};
