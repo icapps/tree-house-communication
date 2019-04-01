@@ -1,10 +1,14 @@
 import * as _ from 'lodash';
-import { ITo, ITemplateRequest } from '../lib/models/ITemplateRequest';
-import { IMandrilTemplateRequest, IMergeVars, IRecipient } from '../lib/models/IMandrilTemplateRequest';
+import { ITo, TemplateMailOptions, ITemplateRequest, IMergeVars, IRecipient } from '../lib/models/ITemplateRequest';
 
-export function mapTemplateEmail(mailInfo: ITemplateRequest): IMandrilTemplateRequest {
+/**
+ * Map template email
+ * @param {Object} mailInfo
+ * @returns {Object}
+ */
+export function mapTemplateEmail(mailInfo: ITemplateRequest): TemplateMailOptions {
   // Build request object for mandrill
-  const mailingRequest: IMandrilTemplateRequest = {
+  const mailingRequest: TemplateMailOptions = {
     template_name: mailInfo.templateName,
     template_content: [],
     message: {
@@ -19,24 +23,32 @@ export function mapTemplateEmail(mailInfo: ITemplateRequest): IMandrilTemplateRe
   return mailingRequest;
 }
 
+/**
+ * Map merge vars
+ * @param {Object|String} recipient
+ * @returns {Object}
+ */
 const mapMergeVars = (recipient: ITo | string): IMergeVars => {
   if (_.isString(recipient)) {
     return;
   }
-  const vars: any[] = [];
-  if (recipient.content) {
-    recipient.content.forEach(content => vars.push({
-      name: content.name,
-      content: content.value,
-    }));
-  }
+  const vars: any[] = recipient.content ? recipient.content.map(content => ({
+    name: content.name,
+    content: content.value,
+  })) : [];
+
   return {
     vars,
     rcpt: recipient.email,
   };
 };
 
-const mapRecipient = (recipient: ITo | string) : IRecipient => {
+/**
+ * Map recipient
+ * @param {Object|String} recipient
+ * @returns {Object}
+ */
+const mapRecipient = (recipient: ITo | string): IRecipient => {
   if (_.isString(recipient)) {
     return {
       email: recipient,

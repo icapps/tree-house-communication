@@ -8,6 +8,7 @@ Boilerplate module written in typescript
 [![Coverage Status](https://coveralls.io/repos/github/icapps/tree-house-communication/badge.svg)](https://coveralls.io/github/icapps/tree-house-communication)
 
 ## General
+
 This module is used to send emails with Mandrill and only template requests (for now).
 
 ## Installation
@@ -15,6 +16,7 @@ This module is used to send emails with Mandrill and only template requests (for
 ```shell
 npm install tree-house-communication
 ```
+
 ## Usage example
 
 ```javascript
@@ -25,31 +27,42 @@ emailService.setMandrillApiKey('secretMandrillKey')
 
 // Create email(s)
 const mailInfo : ITemplateRequest = {
-        templateName: 'icapps-newsletter-template',
-        subject: 'My subject',
-        from: { email: 'info@icapps.be', name: 'Info icapps' },
-        to: [{ email: 'testAddress@gmail.com', name: 'Optional',
-         content: [{ name: 'greeting', value: 'Hello test!' }] }],
-        globalContent: [{ name: 'news', value: 'content of big news' }],
-      };
+  templateName: 'icapps-newsletter-template',
+  subject: 'My subject',
+  from: { email: 'info@icapps.be', name: 'Info icapps' },
+  to: [{ email: 'testAddress@gmail.com', name: 'Optional',
+    content: [{ name: 'greeting', value: 'Hello test!' }] }],
+  globalContent: [{ name: 'news', value: 'content of big news' }],
+};
 
-      const extraMandrillOptions = {
-         async: true,
-         message: { bcc_address: 'test@gmail.com' } 
-         }
+const extraMandrillOptions = {
+    async: true,
+    message: { bcc_address: 'test@gmail.com' }
+    }
 
-      // Send email(s)
-      await sendEmailWithTemplate(mailInfo, extraMandrillOptions);
+// Send email(s)
+const result = await sendEmailWithTemplate(mailInfo, extraMandrillOptions);
+
+// example result
+[
+  {
+    email: 'email@mail.com',
+    status: 'queued',
+    _id: 'e8b9d10ea47e47629d95b22fe200389d'
+  }, {
+    email: 'anotherEmail@mail.com',
+    status: 'queued',
+    _id: '308274f983f14eb09d266dd9abe51546'
+  }
+]
 ```
 
-See all  [extraMandrillOptions](https://mandrillapp.com/api/docs/messages.JSON.html#method=send-template)
-
-
+See all [extraMandrillOptions](https://mandrillapp.com/api/docs/messages.JSON.html#method=send-template)
 
 ## Tests
 
-  You can run `npm run test` to run all tests
-  You can run `npm run test:coverage` to run all tests with coverage report
+- You can run `npm run test` to run all tests
+- You can run `npm run test:coverage` to run all tests with coverage report
 
 ## Authors
 

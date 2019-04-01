@@ -1,26 +1,19 @@
-import * as mandrill from 'mandrill-api';
 import * as _ from 'lodash';
-import { getMandrillApiKey }  from '../config/client-config';
 import { mapTemplateEmail } from '../mapper/templateMapper';
-import { ITemplateRequest } from './models/ITemplateRequest';
-import { IMandrilTemplateRequest } from './models/IMandrilTemplateRequest';
+import { sendTemplate, getClient } from './mailer';
+import { TemplateMailOptions, ITemplateRequest } from './models/ITemplateRequest';
 
-export async function sendEmailWithTemplate(mailInfo: ITemplateRequest, mandrillOptions?: any) {
+/**
+ * Send email with a template
+ *
+ * @param {Object} mailInfo
+ * @param {Any} mandrillOptions
+ * @returns {Object}
+ */
+export async function sendEmailWithTemplate(mailInfo: ITemplateRequest, mandrillOptions: any = {}): Promise<void> {
+  const client = getClient();
 
-  if (!getMandrillApiKey()) throw new Error('Mandrill Api key is missing, please provide one with setMandrillApiKey()');
-  const client = new mandrill.Mandrill(getMandrillApiKey(), process.env.LOG_LEVEL === 'debug');
-
-  return new Promise((resolve, reject) => {
-
-    let mailingRequest: IMandrilTemplateRequest = mapTemplateEmail(mailInfo);
-    if (mandrillOptions) {
-      mailingRequest = _.merge(mandrillOptions, mailingRequest);
-    }
-
-    client.messages.sendTemplate(mailingRequest, (result) => {
-      resolve(result);
-    },                           (error: Error) => {
-      reject(new Error(`Could not send email with template: ${error.message}`));
-    });
-  });
+  let content: TemplateMailOptions = mapTemplateEmail(mailInfo);
+  content = _.merge(mandrillOptions, content);
+  return sendTemplate(content, client);
 }

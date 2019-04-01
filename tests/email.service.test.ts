@@ -2,23 +2,27 @@ import { sendEmailWithTemplate } from '../src/lib/email.service';
 import { ITemplateRequest } from '../src/lib/models/ITemplateRequest';
 import { setMandrillApiKey } from '../src/config/client-config';
 
-const testEmailAddress = 'ben.vanraemdonck@icapps.com';
+const testEmailAddress = 'testMail@icapps.com';
 
 describe('email service', () => {
-  describe('sendEmailWithTemplate', () => {
-    beforeAll(() => {
-      setMandrillApiKey('YY5pkBrTRAXKodN-0CL38g');
-    });
+  beforeAll(() => {
+    setMandrillApiKey('YY5pkBrTRAXKodN-0CL38g');
+  });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('sendEmailWithTemplate', () => {
     it('Should send the email correctly with values filled in for recipient', async () => {
-      const mailInfo : ITemplateRequest = {
+      const mailInfo: ITemplateRequest = {
         templateName: '00-forgot-password',
         subject: 'My subject',
         from: { email: 'info@icapps.be', name: 'Info icapps' },
         to: [{ email: testEmailAddress, name: 'name', content: [{ name: 'firstname', value: 'Custom for recipient' }] }],
         globalContent: [
-                { name: 'var1', value: 'myValue1' },
-                { name: 'var2', value: 'myValue2' },
+          { name: 'var1', value: 'myValue1' },
+          { name: 'var2', value: 'myValue2' },
         ],
       };
 
@@ -26,14 +30,14 @@ describe('email service', () => {
     });
 
     it('Should send email correctly with following parameters #2', async () => {
-      const values : ITemplateRequest = {
+      const values: ITemplateRequest = {
         templateName: '00-forgot-password',
         subject: 'CC test email',
         from: { email: 'info@icapps.com', name: 'Info icapps' },
         to: [{ email: testEmailAddress, name: 'name', type: 'cc' }],
         globalContent: [
-                { name: 'var1', value: 'myValue1' },
-                { name: 'var2', value: 'myValue2' },
+          { name: 'var1', value: 'myValue1' },
+          { name: 'var2', value: 'myValue2' },
         ],
       };
 
@@ -41,7 +45,7 @@ describe('email service', () => {
     });
 
     it('Should send email correctly with following following parameters #3', async () => {
-      const values : ITemplateRequest = {
+      const values: ITemplateRequest = {
         templateName: '00-forgot-password',
         subject: 'Test array of strings',
         from: { email: 'info@icapps.com', name: 'Info icapps' },
@@ -59,14 +63,14 @@ describe('email service', () => {
       // Overwrite mandrill api key with original value if none is provided
       setMandrillApiKey('');
 
-      const mailInfo : ITemplateRequest = {
+      const mailInfo: ITemplateRequest = {
         templateName: '00-forgot-password',
         subject: 'My subject',
         from: { email: 'info@icapps.be', name: 'Info icapps' },
         to: [{ email: testEmailAddress, name: 'name', content: [{ name: 'firstname', value: 'Custom for recipient' }] }],
         globalContent: [
-                { name: 'var1', value: 'myValue1' },
-                { name: 'var2', value: 'myValue2' },
+          { name: 'var1', value: 'myValue1' },
+          { name: 'var2', value: 'myValue2' },
         ],
       };
 
@@ -75,7 +79,7 @@ describe('email service', () => {
         await sendEmailWithTemplate(mailInfo);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toEqual('Mandrill Api key is missing, please provide one with setMandrillApiKey()');
+        expect(error.message).toEqual('No Mandrill api key provided');
       }
     });
 
@@ -83,14 +87,14 @@ describe('email service', () => {
       // Overwrite mandrill api key with an invalid key
       setMandrillApiKey('incorrect api key');
 
-      const mailInfo : ITemplateRequest = {
+      const mailInfo: ITemplateRequest = {
         templateName: '00-forgot-password',
         subject: 'My subject',
         from: { email: 'info@icapps.be', name: 'Info icapps' },
         to: [{ email: testEmailAddress, name: 'name', content: [{ name: 'firstname', value: 'Custom for recipient' }] }],
         globalContent: [
-                { name: 'var1', value: 'myValue1' },
-                { name: 'var2', value: 'myValue2' },
+          { name: 'var1', value: 'myValue1' },
+          { name: 'var2', value: 'myValue2' },
         ],
       };
 
@@ -98,8 +102,8 @@ describe('email service', () => {
       try {
         await sendEmailWithTemplate(mailInfo);
       } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-        expect(error.message).toEqual('Could not send email with template: Invalid API key');
+        expect(error.code).toEqual(-1);
+        expect(error.message).toEqual('Invalid API key');
       }
     });
   });

@@ -21,22 +21,22 @@
   ],
   "dependencies": {
     "lodash": "~4.17.11",
-    "mandrill-api": "^1.0.45"
+    "mandrill-api": "~1.0.45"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
-    "@types/lodash": "^4.14.120",
+    "@types/lodash": "^4.14.123",
     "@types/mandrill-api": "^1.0.30",
-    "coveralls": "^3.0.2",
-    "jest": "^24.0.0",
+    "coveralls": "^3.0.3",
+    "jest": "^24.7.1",
     "node-mocks-http": "^1.7.3",
     "np": "^4.0.2",
     "pre-commit": "^1.2.2",
     "supertest": "^4.0.2",
-    "ts-jest": "^24.0.1",
-    "tslint": "^5.12.1",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.4.3"
   },
   "engines": {
     "node": ">=6.0.0"
