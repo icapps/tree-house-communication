@@ -1,23 +1,19 @@
-import * as mandrill from 'mandrill-api';
-import * as config from '../config/client-config';
+import * as _ from 'lodash';
 import { mapTemplateEmail } from '../mapper/templateMapper';
-import { ITemplateRequest } from './goodModels/ITemplateRequest';
+import { sendTemplate, getClient } from './mailer';
+import { TemplateMailOptions, ITemplateRequest } from './models/ITemplateRequest';
 
-if (config.getMandrillApiKey() === '') throw new Error('No Mandrill api key provided');
-const client = new mandrill.Mandrill(config.getMandrillApiKey(), process.env.LOG_LEVEL === 'debug');
+/**
+ * Send email with a template
+ *
+ * @param {Object} mailInfo
+ * @param {Any} mandrillOptions
+ * @returns {Object}
+ */
+export async function sendEmailWithTemplate(mailInfo: ITemplateRequest, mandrillOptions: any = {}): Promise<void> {
+  const client = getClient();
 
-export async function sendEmailWithTemplate(mailInfo: ITemplateRequest) {
-  return new Promise((resolve, reject) => {
-
-    const mailingRequest = mapTemplateEmail(mailInfo);
-
-  // Send mail
-    client.messages.sendTemplate(mailingRequest, (result) => {
-      console.log(result);
-      resolve(result);
-    },                           (error) => {
-      console.log(error);
-      reject(error);
-    });
-  });
+  let content: TemplateMailOptions = mapTemplateEmail(mailInfo);
+  content = _.merge(mandrillOptions, content);
+  return sendTemplate(content, client);
 }

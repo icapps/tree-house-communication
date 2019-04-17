@@ -8,9 +8,10 @@
 
     "moduleResolution": "node",
     "baseUrl": "./",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "declaration": true,
-
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": false,
     "removeComments": true,

@@ -14,6 +14,16 @@
       "ban-keywords",
       "check-format",
       "allow-leading-underscore"
-   ]
+    ],
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ],
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ]
   }
 }

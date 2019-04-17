@@ -1,42 +1,60 @@
-import { ITemplateRequest } from '../lib/goodModels/ITemplateRequest';
-import { IMandrilTemplateRequest, IMergeVars, IRecipient } from '../lib/models/IMandrilTemplateRequest';
+import * as _ from 'lodash';
+import { ITo, TemplateMailOptions, ITemplateRequest, IMergeVars, IRecipient } from '../lib/models/ITemplateRequest';
 
-// tslint:disable-next-line:max-line-length
-export function mapTemplateEmail(mailInfo: ITemplateRequest) : IMandrilTemplateRequest {
-
-  // Map merge vars
-  const mergeVars : IMergeVars[] = [];
-  const recipients : IRecipient[] = [];
-
-  mailInfo.to.map((recipient) => {
-    const userMergeVars : IMergeVars = { rcpt: null, vars: [] };
-    userMergeVars.rcpt = recipient.email;
-
-    recipients.push({ email: recipient.email });
-    if (recipient.content) {
-      recipient.content.forEach((content : { name: string, value: string }) => {
-        userMergeVars.vars.push({ name: content.name, content: content.value });
-      });
-      if (userMergeVars.vars.length > 0) {
-        mergeVars.push(userMergeVars);
-        console.log(mergeVars);
-      }
-    }
-  });
-
-// Build request object for mandrill
-  const mailingRequest : IMandrilTemplateRequest = {
+/**
+ * Map template email
+ * @param {Object} mailInfo
+ * @returns {Object}
+ */
+export function mapTemplateEmail(mailInfo: ITemplateRequest): TemplateMailOptions {
+  // Build request object for mandrill
+  const mailingRequest: TemplateMailOptions = {
     template_name: mailInfo.templateName,
     template_content: [],
     message: {
-      from_email: mailInfo.from.email,
+      from_email: _.isString(mailInfo.from) ? mailInfo.from : mailInfo.from.email,
       subject: mailInfo.subject,
-      to: recipients,
-      merge_vars: mergeVars,
+      to: mailInfo.to.map(mapRecipient),
+      merge_vars: mailInfo.to.map(mapMergeVars),
       global_merge_vars: [],
     },
   };
 
-  console.log('mailingREQ: ', mailingRequest);
   return mailingRequest;
 }
+
+/**
+ * Map merge vars
+ * @param {Object|String} recipient
+ * @returns {Object}
+ */
+const mapMergeVars = (recipient: ITo | string): IMergeVars => {
+  if (_.isString(recipient)) {
+    return;
+  }
+  const vars: any[] = recipient.content ? recipient.content.map(content => ({
+    name: content.name,
+    content: content.value,
+  })) : [];
+
+  return {
+    vars,
+    rcpt: recipient.email,
+  };
+};
+
+/**
+ * Map recipient
+ * @param {Object|String} recipient
+ * @returns {Object}
+ */
+const mapRecipient = (recipient: ITo | string): IRecipient => {
+  if (_.isString(recipient)) {
+    return {
+      email: recipient,
+    };
+  }
+  return {
+    email: recipient.email,
+  };
+};
