@@ -1,5 +1,5 @@
 {
-  "name": "tree-house-communication",
+  "name": "@icapps/tree-house-communication",
   "version": "1.0.0",
   "description": "Tree House communication module",
   "main": "build/index.js",
