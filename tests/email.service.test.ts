@@ -59,6 +59,17 @@ describe('email service', () => {
       await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } });
     });
 
+    it('Should send email correctly with following following parameters #4', async () => {
+      const values: ITemplateRequest = {
+        templateName: '00-forgot-password',
+        subject: 'Test array of strings',
+        from: 'info@icapps.com',
+        to: [testEmailAddress, 'anotherEmail@gmail.com'],
+      };
+
+      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } });
+    });
+
     it('Should throw an error when the provided api key is invalid', async () => {
       // Overwrite mandrill api key with original value if none is provided
       setMandrillApiKey('');
