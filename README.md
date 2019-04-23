@@ -1,11 +1,12 @@
-# Treehouse boilerplate
+# Treehouse Communication
 
-Boilerplate module written in typescript
+Communication module written in TypeScript providing communication utilities.
 
 [![npm version](https://badge.fury.io/js/%40icapps%2Ftree-house-communication.svg)](https://badge.fury.io/js/%40icapps%2Ftree-house-communication)
 [![Dependencies](https://david-dm.org/icapps/tree-house-communication.svg)](https://david-dm.org/icapps/tree-house-communication.svg)
 [![Build Status](https://travis-ci.org/icapps/tree-house-communication.svg?branch=master)](https://travis-ci.org/icapps/tree-house-communication)
-[![Coverage Status](https://coveralls.io/repos/github/icapps/tree-house-communication/badge.svg)](https://coveralls.io/github/icapps/tree-house-communication) [![Greenkeeper badge](https://badges.greenkeeper.io/icapps/tree-house-communication.svg)](https://greenkeeper.io/)
+[![Coverage Status](https://coveralls.io/repos/github/icapps/tree-house-communication/badge.svg)](https://coveralls.io/github/icapps/tree-house-communication)
+[![Greenkeeper badge](https://badges.greenkeeper.io/icapps/tree-house-communication.svg)](https://greenkeeper.io/)
 
 ## General
 

@@ -1,6 +1,6 @@
 {
   "name": "@icapps/tree-house-communication",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tree House communication module",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -30,13 +30,13 @@
     "coveralls": "^3.0.3",
     "jest": "^24.7.1",
     "node-mocks-http": "^1.7.3",
-    "np": "^4.0.2",
+    "np": "^5.0.0",
     "pre-commit": "^1.2.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.4"
   },
   "engines": {
     "node": ">=6.0.0"
