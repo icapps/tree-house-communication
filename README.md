@@ -15,7 +15,7 @@ This module is used to send emails with Mandrill and only template requests (for
 ## Installation
 
 ```shell
-npm install tree-house-communication
+npm install @icapps/tree-house-communication
 ```
 
 ## Usage example
