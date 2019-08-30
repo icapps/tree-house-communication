@@ -20,23 +20,23 @@
     "build"
   ],
   "dependencies": {
-    "lodash": "~4.17.11",
+    "lodash": "~4.17.15",
     "mandrill-api": "~1.0.45"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.11",
-    "@types/lodash": "^4.14.123",
-    "@types/mandrill-api": "^1.0.30",
-    "coveralls": "^3.0.3",
-    "jest": "^24.7.1",
-    "node-mocks-http": "^1.7.3",
-    "np": "^5.0.0",
-    "pre-commit": "^1.2.2",
-    "supertest": "^4.0.2",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.16.0",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.4.5"
+    "@types/jest": "~24.0.18",
+    "@types/lodash": "~4.14.138",
+    "@types/mandrill-api": "~1.0.30",
+    "coveralls": "~3.0.6",
+    "jest": "~24.9.0",
+    "node-mocks-http": "~1.7.6",
+    "np": "~5.0.3",
+    "pre-commit": "~1.2.2",
+    "supertest": "~4.0.2",
+    "ts-jest": "~24.0.2",
+    "tslint": "~5.19.0",
+    "tslint-config-airbnb": "~5.11.1",
+    "typescript": "~3.6.2"
   },
   "engines": {
     "node": ">=6.0.0"
