@@ -24,7 +24,7 @@
     "mandrill-api": "~1.0.45"
   },
   "devDependencies": {
-    "@types/jest": "~24.9.0",
+    "@types/jest": "~25.1.0",
     "@types/lodash": "~4.14.149",
     "@types/mandrill-api": "~1.0.30",
     "coveralls": "~3.0.9",
