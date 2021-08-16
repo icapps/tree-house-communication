@@ -13,4 +13,4 @@ export const getMandrillApiKey = (): string => config.mandrillApiKey;
  * @param {String} key
  * @returns {String}
  */
-export const setMandrillApiKey = (key: string): string => config.mandrillApiKey = key;
+export const setMandrillApiKey = (key: string): string => (config.mandrillApiKey = key);

@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
+
 import { mapTemplateEmail } from '../mapper/templateMapper';
 import { sendTemplate, getClient } from './mailer';
-import { TemplateMailOptions, ITemplateRequest } from './models/ITemplateRequest';
+import { ITemplateRequest, SendTemplateParams } from './models/ITemplateRequest';
 
 /**
  * Send email with a template
@@ -10,10 +11,10 @@ import { TemplateMailOptions, ITemplateRequest } from './models/ITemplateRequest
  * @param {Any} mandrillOptions
  * @returns {Object}
  */
-export async function sendEmailWithTemplate(mailInfo: ITemplateRequest, mandrillOptions: any = {}): Promise<void> {
+export async function sendEmailWithTemplate(mailInfo: ITemplateRequest, mandrillOptions: Partial<SendTemplateParams> = {}): Promise<unknown> {
   const client = getClient();
 
-  let content: TemplateMailOptions = mapTemplateEmail(mailInfo);
+  let content: SendTemplateParams = mapTemplateEmail(mailInfo);
   content = _.merge(mandrillOptions, content);
   return sendTemplate(content, client);
 }

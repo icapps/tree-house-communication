@@ -7,7 +7,11 @@
   "scripts": {
     "clean": "rm -rf ./build/*",
     "build": "npm run clean && tsc",
-    "lint": "tslint 'src/**/*.ts'",
+    "lint": "eslint ./src ./tests --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint ./src ./tests --ext .js,.jsx,.ts,.tsx --fix",
+    "format:check": "prettier -c \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "format:fix": "prettier -c  --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "pre-commit-checks": "concurrently --kill-others-on-fail \"npm run lint\" \"npm run format:check\" \"npm run build\"",
     "test": "jest",
     "test:coverage": "jest --coverage --collectCoverageFrom=src/**/*.ts",
     "test:watch": "jest --watchAll",
@@ -16,27 +20,31 @@
     "release": "node_modules/np/source/cli.js --no-cleanup"
   },
   "precommit": [
-    "lint",
-    "build"
+    "pre-commit-checks"
   ],
   "dependencies": {
-    "lodash": "~4.17.15",
+    "lodash": "~4.17.21",
     "mandrill-api": "~1.0.45"
   },
   "devDependencies": {
-    "@types/jest": "~24.9.0",
-    "@types/lodash": "~4.14.149",
+    "@types/jest": "~27.0.1",
+    "@types/lodash": "~4.14.172",
     "@types/mandrill-api": "~1.0.30",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
+    "concurrently": "^6.2.1",
     "coveralls": "~3.0.9",
-    "jest": "~24.9.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.0",
+    "jest": "~27.0.6",
     "node-mocks-http": "~1.8.1",
-    "np": "~5.2.1",
+    "np": "~7.5.0",
     "pre-commit": "~1.2.2",
-    "supertest": "~4.0.2",
-    "ts-jest": "~24.3.0",
-    "tslint": "~5.20.1",
-    "tslint-config-airbnb": "~5.11.2",
-    "typescript": "~3.7.5"
+    "prettier": "2.3.2",
+    "supertest": "~6.1.5",
+    "ts-jest": "~27.0.4",
+    "typescript": "~4.3.5"
   },
   "engines": {
     "node": ">=8.0.0"

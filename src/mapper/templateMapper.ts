@@ -1,14 +1,15 @@
 import * as _ from 'lodash';
-import { ITo, TemplateMailOptions, ITemplateRequest, IMergeVars, IRecipient } from '../lib/models/ITemplateRequest';
+
+import { ITo, ITemplateRequest, SendTemplateParams, Recipient, MergeVar, MergeVarInfo } from '../lib/models/ITemplateRequest';
 
 /**
  * Map template email
  * @param {Object} mailInfo
  * @returns {Object}
  */
-export function mapTemplateEmail(mailInfo: ITemplateRequest): TemplateMailOptions {
+export function mapTemplateEmail(mailInfo: ITemplateRequest): SendTemplateParams {
   // Build request object for mandrill
-  const mailingRequest: TemplateMailOptions = {
+  return {
     template_name: mailInfo.templateName,
     template_content: mailInfo.templateContent || [],
     message: {
@@ -19,8 +20,6 @@ export function mapTemplateEmail(mailInfo: ITemplateRequest): TemplateMailOption
       global_merge_vars: mailInfo.globalContent ? mailInfo.globalContent.map(mapMergeVar) : [],
     },
   };
-
-  return mailingRequest;
 }
 
 /**
@@ -28,11 +27,11 @@ export function mapTemplateEmail(mailInfo: ITemplateRequest): TemplateMailOption
  * @param {Object|String} recipient
  * @returns {Object}
  */
-const mapMergeVars = (recipient: ITo | string): IMergeVars => {
+const mapMergeVars = (recipient: ITo | string): MergeVar => {
   if (_.isString(recipient)) {
     return;
   }
-  const vars: any[] = recipient.content ? recipient.content.map(mapMergeVar) : [];
+  const vars: MergeVarInfo[] = recipient.content ? recipient.content.map(mapMergeVar) : [];
 
   return {
     vars,
@@ -45,7 +44,7 @@ const mapMergeVars = (recipient: ITo | string): IMergeVars => {
  * @param {Object} value
  * @returns {Object[]}
  */
-const mapMergeVar = (value: { name: string, value: string }): { name: string, content: string } => {
+const mapMergeVar = (value: { name: string; value: string }): MergeVarInfo => {
   return { name: value.name, content: value.value };
 };
 
@@ -54,7 +53,7 @@ const mapMergeVar = (value: { name: string, value: string }): { name: string, co
  * @param {Object|String} recipient
  * @returns {Object}
  */
-const mapRecipient = (recipient: ITo | string): IRecipient => {
+const mapRecipient = (recipient: ITo | string): Recipient => {
   if (_.isString(recipient)) {
     return {
       email: recipient,
