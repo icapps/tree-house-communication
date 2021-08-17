@@ -1,14 +1,28 @@
+import { Messages } from 'mandrill-api';
+
 import { sendEmailWithTemplate, ITemplateRequest, setMandrillApiKey, SendTemplateParams } from '../src';
 
 const testEmailAddress = 'testMail@icapps.com';
 
+jest.mock('mandrill-api', () => {
+  return {
+    Mandrill: jest.fn().mockImplementation(() => {
+      return {
+        messages: {
+          sendTemplate: jest.fn().mockResolvedValue({}),
+        } as unknown as Messages,
+      };
+    }),
+  };
+});
+
 describe('email service', () => {
-  beforeAll(() => {
-    setMandrillApiKey('YY5pkBrTRAXKodN-0CL38g');
+  beforeEach(() => {
+    setMandrillApiKey('fake-mandril-api-key-for-testing');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    // jest.clearAllMocks();
   });
 
   describe('sendEmailWithTemplate', () => {
@@ -90,30 +104,6 @@ describe('email service', () => {
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toEqual('No Mandrill api key provided');
-      }
-    });
-
-    it('Should throw an error when it cannot send the message', async () => {
-      // Overwrite mandrill api key with an invalid key
-      setMandrillApiKey('incorrect api key');
-
-      const mailInfo: ITemplateRequest = {
-        templateName: '00-forgot-password',
-        subject: 'My subject',
-        from: { email: 'info@icapps.be', name: 'Info icapps' },
-        to: [{ email: testEmailAddress, name: 'name', content: [{ name: 'firstname', value: 'Custom for recipient' }] }],
-        globalContent: [
-          { name: 'var1', value: 'myValue1' },
-          { name: 'var2', value: 'myValue2' },
-        ],
-      };
-
-      expect.assertions(2);
-      try {
-        await sendEmailWithTemplate(mailInfo);
-      } catch (error) {
-        expect(error.code).toEqual(-1);
-        expect(error.message).toEqual('Invalid API key');
       }
     });
   });

@@ -12,7 +12,7 @@
     "format:check": "prettier -c \"src/**/*.ts\" \"tests/**/*.ts\"",
     "format:fix": "prettier -c  --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "pre-commit-checks": "concurrently --kill-others-on-fail \"npm run lint\" \"npm run format:check\" \"npm run build\"",
-    "test": "jest",
+    "test": "jest \"tests/.*\\.test\\.ts\"",
     "test:coverage": "jest --coverage --collectCoverageFrom=src/**/*.ts",
     "test:watch": "jest --watchAll",
     "pretest": "npm run build",
@@ -24,7 +24,8 @@
   ],
   "dependencies": {
     "lodash": "~4.17.21",
-    "mandrill-api": "~1.0.45"
+    "mandrill-api": "~1.0.45",
+    "twilio": "^3.67.0"
   },
   "devDependencies": {
     "@types/jest": "~27.0.1",
