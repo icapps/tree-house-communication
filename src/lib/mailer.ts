@@ -1,14 +1,15 @@
-import * as mandrill from 'mandrill-api';
+import { Mandrill } from 'mandrill-api';
+
 import { getMandrillApiKey } from '../config/client-config';
-import { MailClient, TemplateMailOptions } from './models/ITemplateRequest';
+import { SendTemplateParams } from './models/ITemplateRequest';
 
 /**
  * Return a default MailClient (Mandrill in this case)
  */
-export function getClient(): mandrill.Mandrill {
+export function getClient(): Mandrill {
   const apiKey = getMandrillApiKey();
   if (!apiKey) throw new Error('No Mandrill api key provided');
-  return new mandrill.Mandrill(apiKey, process.env.LOG_LEVEL === 'debug');
+  return new Mandrill(apiKey, process.env.LOG_LEVEL === 'debug');
 }
 
 /**
@@ -16,12 +17,16 @@ export function getClient(): mandrill.Mandrill {
  * @param {Object} options
  * @param {Object} client
  */
-export async function sendTemplate(options: TemplateMailOptions, client: MailClient): Promise<void> {
-  return new Promise((resolve, reject) => {
-    client.messages.sendTemplate(options, (result: any) => {
-      resolve(result);
-    }, (error: any) => {
-      reject(error);
-    });
+export async function sendTemplate(options: SendTemplateParams, client: Partial<Mandrill>): Promise<unknown> {
+  return new Promise<unknown>((resolve, reject) => {
+    client.messages.sendTemplate(
+      options,
+      (result: unknown) => {
+        resolve(result);
+      },
+      (error: unknown) => {
+        reject(error);
+      },
+    );
   });
 }

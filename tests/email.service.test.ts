@@ -1,6 +1,4 @@
-import { sendEmailWithTemplate } from '../src/lib/email.service';
-import { ITemplateRequest } from '../src/lib/models/ITemplateRequest';
-import { setMandrillApiKey } from '../src/config/client-config';
+import { sendEmailWithTemplate, ITemplateRequest, setMandrillApiKey, SendTemplateParams } from '../src';
 
 const testEmailAddress = 'testMail@icapps.com';
 
@@ -50,13 +48,14 @@ describe('email service', () => {
         subject: 'Test array of strings',
         from: { email: 'info@icapps.com', name: 'Info icapps' },
         to: [testEmailAddress, 'anotherEmail@gmail.com'],
-        globalContent: [ // global
+        globalContent: [
+          // global
           { name: 'var1', value: 'myValue1' },
           { name: 'var2', value: 'myValue2' },
         ],
       };
 
-      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } });
+      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } } as SendTemplateParams);
     });
 
     it('Should send email correctly with following following parameters #4', async () => {
@@ -67,7 +66,7 @@ describe('email service', () => {
         to: [testEmailAddress, 'anotherEmail@gmail.com'],
       };
 
-      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } });
+      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } } as SendTemplateParams);
     });
 
     it('Should throw an error when the provided api key is invalid', async () => {
