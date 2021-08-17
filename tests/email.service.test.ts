@@ -1,4 +1,4 @@
-import { Messages } from 'mandrill-api';
+import { ICallback, Messages } from 'mandrill-api';
 
 import { sendEmailWithTemplate, ITemplateRequest, setMandrillApiKey, SendTemplateParams } from '../src';
 
@@ -9,7 +9,9 @@ jest.mock('mandrill-api', () => {
     Mandrill: jest.fn().mockImplementation(() => {
       return {
         messages: {
-          sendTemplate: jest.fn().mockResolvedValue({}),
+          sendTemplate: jest.fn((params: SendTemplateParams, onsuccess?: ICallback) => {
+            onsuccess(params);
+          }),
         } as unknown as Messages,
       };
     }),
@@ -38,6 +40,7 @@ describe('email service', () => {
         ],
       };
 
+      console.log('test123456');
       await sendEmailWithTemplate(mailInfo);
     });
 
