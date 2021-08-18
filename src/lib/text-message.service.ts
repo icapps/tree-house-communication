@@ -4,7 +4,7 @@ import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
 import { getTwilioAccountSid, getTwilioAuthToken } from '../config/client-config';
 
 /**
- * Return a default MailClient (Mandrill in this case)
+ * Return a twilio client
  */
 function getClient(): twilio.Twilio {
   const accountSid = getTwilioAccountSid();
@@ -16,10 +16,10 @@ function getClient(): twilio.Twilio {
 
 /**
  * Send text messages to phone numbers
+ * @param {String} fromNumber
+ * @param {String} toNumber
+ * @param {String} message
  * @returns {Object}
- * @param fromNumber
- * @param toNumber
- * @param message
  */
 export function sendTextMessage(fromNumber: string, toNumber: string, message: string): Promise<MessageInstance> {
   const client: twilio.Twilio = getClient();

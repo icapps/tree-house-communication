@@ -24,7 +24,7 @@ describe('email service', () => {
   });
 
   afterEach(() => {
-    // jest.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   describe('sendEmailWithTemplate', () => {
@@ -40,7 +40,6 @@ describe('email service', () => {
         ],
       };
 
-      console.log('test123456');
       await sendEmailWithTemplate(mailInfo);
     });
 

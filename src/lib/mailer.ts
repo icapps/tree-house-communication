@@ -19,15 +19,12 @@ export function getClient(): Mandrill {
  */
 export async function sendTemplate(options: SendTemplateParams, client: Partial<Mandrill>): Promise<unknown> {
   return new Promise<unknown>((resolve, reject) => {
-    console.log('sendTemplate: ' + client.messages.sendTemplate);
     client.messages.sendTemplate(
       options,
       (result: unknown) => {
-        console.log('resolved');
         resolve(result);
       },
       (error: unknown) => {
-        console.log('rejected');
         reject(error);
       },
     );

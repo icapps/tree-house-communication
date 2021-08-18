@@ -24,19 +24,19 @@
   "dependencies": {
     "lodash": "~4.17.21",
     "mandrill-api": "~1.0.45",
-    "twilio": "^3.67.0"
+    "twilio": "~3.67.0"
   },
   "devDependencies": {
     "@types/jest": "~27.0.1",
     "@types/lodash": "~4.14.172",
     "@types/mandrill-api": "~1.0.30",
-    "@typescript-eslint/eslint-plugin": "^4.29.1",
-    "@typescript-eslint/parser": "^4.29.1",
-    "concurrently": "^6.2.1",
+    "@typescript-eslint/eslint-plugin": "~4.29.1",
+    "@typescript-eslint/parser": "~4.29.1",
+    "concurrently": "~6.2.1",
     "coveralls": "~3.0.9",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.24.0",
+    "eslint": "~7.32.0",
+    "eslint-config-prettier": "~8.3.0",
+    "eslint-plugin-import": "~2.24.0",
     "jest": "~27.0.6",
     "node-mocks-http": "~1.8.1",
     "np": "~7.5.0",
