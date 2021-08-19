@@ -16,5 +16,6 @@ export async function sendEmailWithTemplate(mailInfo: ITemplateRequest, mandrill
 
   let content: SendTemplateParams = mapTemplateEmail(mailInfo);
   content = _.merge(mandrillOptions, content);
+
   return sendTemplate(content, client);
 }

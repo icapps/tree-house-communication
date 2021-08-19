@@ -1,6 +1,6 @@
 {
   "name": "@icapps/tree-house-communication",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Tree House communication module",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -12,10 +12,9 @@
     "format:check": "prettier -c \"src/**/*.ts\" \"tests/**/*.ts\"",
     "format:fix": "prettier -c  --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "pre-commit-checks": "concurrently --kill-others-on-fail \"npm run lint\" \"npm run format:check\" \"npm run build\"",
-    "test": "jest",
+    "test": "jest \"tests/.*\\.test\\.ts\"",
     "test:coverage": "jest --coverage --collectCoverageFrom=src/**/*.ts",
     "test:watch": "jest --watchAll",
-    "pretest": "npm run build",
     "prepare": "npm run build",
     "release": "node_modules/np/source/cli.js --no-cleanup"
   },
@@ -24,19 +23,20 @@
   ],
   "dependencies": {
     "lodash": "~4.17.21",
-    "mandrill-api": "~1.0.45"
+    "mandrill-api": "~1.0.45",
+    "twilio": "~3.67.0"
   },
   "devDependencies": {
     "@types/jest": "~27.0.1",
     "@types/lodash": "~4.14.172",
     "@types/mandrill-api": "~1.0.30",
-    "@typescript-eslint/eslint-plugin": "^4.29.1",
-    "@typescript-eslint/parser": "^4.29.1",
-    "concurrently": "^6.2.1",
+    "@typescript-eslint/eslint-plugin": "~4.29.1",
+    "@typescript-eslint/parser": "~4.29.1",
+    "concurrently": "~6.2.1",
     "coveralls": "~3.0.9",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.24.0",
+    "eslint": "~7.32.0",
+    "eslint-config-prettier": "~8.3.0",
+    "eslint-plugin-import": "~2.24.0",
     "jest": "~27.0.6",
     "node-mocks-http": "~1.8.1",
     "np": "~7.5.0",
