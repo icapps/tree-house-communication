@@ -1,15 +1,14 @@
-import { Mandrill } from 'mandrill-api';
+import Mailchimp = require('@mailchimp/mailchimp_transactional');
 
 import { getMandrillApiKey } from '../config/client-config';
-import { SendTemplateParams } from './models/ITemplateRequest';
 
 /**
  * Return a default MailClient (Mandrill in this case)
  */
-export function getClient(): Mandrill {
+export function getClient(): Mailchimp.ApiClient {
   const apiKey = getMandrillApiKey();
   if (!apiKey) throw new Error('No Mandrill api key provided');
-  return new Mandrill(apiKey, process.env.LOG_LEVEL === 'debug');
+  return Mailchimp(apiKey);
 }
 
 /**
@@ -17,16 +16,6 @@ export function getClient(): Mandrill {
  * @param {Object} options
  * @param {Object} client
  */
-export async function sendTemplate(options: SendTemplateParams, client: Partial<Mandrill>): Promise<unknown> {
-  return new Promise<unknown>((resolve, reject) => {
-    client.messages.sendTemplate(
-      options,
-      (result: unknown) => {
-        resolve(result);
-      },
-      (error: unknown) => {
-        reject(error);
-      },
-    );
-  });
+export async function sendTemplate(options: Mailchimp.SendTemplateMessageRequest, client: Partial<Mailchimp.ApiClient>): Promise<unknown> {
+  return client.messages.sendTemplate(options);
 }

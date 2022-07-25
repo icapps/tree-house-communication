@@ -1,21 +1,17 @@
-import { ICallback, Messages } from 'mandrill-api';
+import { SendTemplateMessageRequest, SendTemplateMessageResponse } from '@mailchimp/mailchimp_transactional';
 
-import { sendEmailWithTemplate, ITemplateRequest, setMandrillApiKey, SendTemplateParams } from '../src';
+import { sendEmailWithTemplate, ITemplateRequest, setMandrillApiKey } from '../src';
 
 const testEmailAddress = 'testMail@icapps.com';
 
-jest.mock('mandrill-api', () => {
-  return {
-    Mandrill: jest.fn().mockImplementation(() => {
-      return {
-        messages: {
-          sendTemplate: jest.fn((params: SendTemplateParams, onsuccess?: ICallback) => {
-            onsuccess(params);
-          }),
-        } as unknown as Messages,
-      };
-    }),
-  };
+jest.mock('@mailchimp/mailchimp_transactional', () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      messages: {
+        sendTemplate: jest.fn((_params: SendTemplateMessageRequest) => Promise<SendTemplateMessageResponse>),
+      },
+    };
+  });
 });
 
 describe('email service', () => {
@@ -71,7 +67,7 @@ describe('email service', () => {
         ],
       };
 
-      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } } as SendTemplateParams);
+      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } } as SendTemplateMessageRequest);
     });
 
     it('Should send email correctly with following following parameters #4', async () => {
@@ -82,7 +78,7 @@ describe('email service', () => {
         to: [testEmailAddress, 'anotherEmail@gmail.com'],
       };
 
-      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } } as SendTemplateParams);
+      await sendEmailWithTemplate(values, { async: true, message: { bcc_address: 'test@gmail.com' } } as SendTemplateMessageRequest);
     });
 
     it('Should throw an error when the provided api key is invalid', async () => {

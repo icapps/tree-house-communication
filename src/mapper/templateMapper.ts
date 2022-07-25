@@ -1,13 +1,14 @@
 import * as _ from 'lodash';
+import { RecipientType, MergeVar, SendTemplateMessageRequest, Recipient, RecipientMergeVar } from '@mailchimp/mailchimp_transactional';
 
-import { ITo, ITemplateRequest, SendTemplateParams, Recipient, MergeVar, MergeVarInfo } from '../lib/models/ITemplateRequest';
+import { ITo, ITemplateRequest } from '../lib/models/ITemplateRequest';
 
 /**
  * Map template email
  * @param {Object} mailInfo
  * @returns {Object}
  */
-export function mapTemplateEmail(mailInfo: ITemplateRequest): SendTemplateParams {
+export function mapTemplateEmail(mailInfo: ITemplateRequest): SendTemplateMessageRequest {
   // Build request object for mandrill
   return {
     template_name: mailInfo.templateName,
@@ -27,11 +28,11 @@ export function mapTemplateEmail(mailInfo: ITemplateRequest): SendTemplateParams
  * @param {Object|String} recipient
  * @returns {Object}
  */
-const mapMergeVars = (recipient: ITo | string): MergeVar => {
+const mapMergeVars = (recipient: ITo | string): RecipientMergeVar => {
   if (_.isString(recipient)) {
     return;
   }
-  const vars: MergeVarInfo[] = recipient.content ? recipient.content.map(mapMergeVar) : [];
+  const vars: MergeVar[] = recipient.content ? recipient.content.map(mapMergeVar) : [];
 
   return {
     vars,
@@ -44,7 +45,7 @@ const mapMergeVars = (recipient: ITo | string): MergeVar => {
  * @param {Object} value
  * @returns {Object[]}
  */
-const mapMergeVar = (value: { name: string; value: string }): MergeVarInfo => {
+const mapMergeVar = (value: { name: string; value: string }): MergeVar => {
   return { name: value.name, content: value.value };
 };
 
@@ -57,9 +58,11 @@ const mapRecipient = (recipient: ITo | string): Recipient => {
   if (_.isString(recipient)) {
     return {
       email: recipient,
+      type: 'to' as RecipientType,
     };
   }
   return {
     email: recipient.email,
+    type: 'to' as RecipientType,
   };
 };
